@@ -29,7 +29,7 @@ def choose_your_destiny():
             current_directory = os.path.dirname(os.path.abspath(path))
             os.chdir('G:\Imagens de Produtos\comida')
             text = input("Nome do arquivo: ")
-            files = glob.glob(text + '*.png')
+            files = glob.glob( '*'+ text +'*.png')
             print("\n\n-------- Arquivos Encontrados --------")
             for i in range(len(files)):
                 print(i , ' - ' , files[i])
