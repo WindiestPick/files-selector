@@ -1,25 +1,33 @@
 import os
 import glob
+from os import walk
 
 def list_files_in(path,files):
     
-    for (dirpath, dirnames, filenames) in os.walk(path):
+    for (dirpath, dirnames, filenames) in walk(path):
       files.extend(filenames)
       break
     
 def show_files(files):
-    
+
+    cont = 0
     for numero,arquivo in enumerate(files):
-        print(arquivo)
+        print(f"",cont,arquivo)
+        cont= cont+1
 
-def menu():
+def search_files(path,filesToSearch):
+    os.chdir(path)
+    text = input("Nome do arquivo: ")
+    filesToSearch = glob.glob( '*'+ text +'*.*')
+    for i in range(len(filesToSearch)):
+        print(i , ' - ' , filesToSearch[i])
 
-    print("---------------- MENU ----------------")
-    print("1 - Mostrar fotos comida")
-    print("5 - Sair")
-    print("--------------------------------------\n")
+def open_file(path,files):
 
+    selecao = int(input("Numero do arquivo que deseja abrir: "))
+    os.startfile(path + files[selecao])
 
+'''
 def choose_your_destiny():
     
     while(True):
@@ -30,7 +38,7 @@ def choose_your_destiny():
             os.chdir('G:\Imagens de Produtos\comida')
             text = input("Nome do arquivo: ")
             files = glob.glob( '*'+ text +'*.png')
-            print("\n\n-------- Arquivos Encontrados --------")
+            print("\n-------- Arquivos Encontrados --------")
             for i in range(len(files)):
                 print(i , ' - ' , files[i])
             print("--------------------------------------\n\n")
@@ -41,7 +49,13 @@ def choose_your_destiny():
             
         elif(destiny == 5):
             break       
+'''
 
-menu()
-choose_your_destiny()
+local = ""
+files = []
+search = []
+list_files_in(local,files)
+show_files(files)
+search_files(local,search)
+open_file(local,files)
 
