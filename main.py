@@ -1,8 +1,15 @@
 from pesquisaNome import PesquisaNome
-path = "C:\\Users\\Marketing\\Documents\\Teste\\"
+from pesquisaCPF import PesquisaCPF
+import os
 
-pesquisa = input("digite o nome do arquivo: ")
+path = ["C:\\Users\\Marketing\\Documents\\Teste","C:\\Users\\Marketing\\Documents\\Teste\\"]
 
-lista = PesquisaNome(pesquisa, path)
+pesquisa = input("digite o nome da pessoa: ")
+
+lista = PesquisaNome(pesquisa, path[0])
 for i in range(len(lista)):
-    print( 1 ," - ", lista[i])
+    print( i+1 ," - ", lista[i])
+
+pesquisa = input("digite o cpf que deseja pesquisar: ")
+
+print(PesquisaCPF(path,pesquisa))

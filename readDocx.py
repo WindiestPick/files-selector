@@ -105,35 +105,34 @@ class ReadDocFile:
         return data
 
 
-def docx_to_text():
+def docx_to_text(file):
     import docx2txt
     # extract text
-    text1 = docx2txt.process("Carlos.docx")
+    text1 = docx2txt.process(file)
 
     # extract text and write images in /tmp/img_dir
     # text2 = docx2txt.process("cv.docx", "YOUR_PATH")
     return text1
 
 
-if __name__ == "__main__":
-    doc = ReadDocFile("C:\\Users\\Marketing\\Documents\\Teste\\Carlos.docx")
+def GetCPf(file):
+    doc = ReadDocFile(file)
     doc.load_document()
 
-    # Find paragraph by filter
-    filter = FormatFilter(bold="True", font_rgb_color="FF0000", italic="None")
-    print(doc.get_formatted_text(format_filter=filter))
-
-    # Find segment exact text
-    result = doc.get_segment(exact_start="Objetivo", exact_end="")
-    # print(result)
-
-    # Find segment contains text
-    result = doc.get_segment(contains_start="candidato", contains_end="celular")
-    # print(result)
-
-    # Get table content
-    result = doc.get_table_content(table_index=0)
-    print(result)
-
     # Use docx2txt
-    print(docx_to_text())
+    a = docx_to_text(file)
+    a = a.split('\n')
+    b = []
+    for i in range(len(a)):
+        if (a[i] != ""):
+            b.append(a[i])
+    for i in range(len(b)):
+        test = b[i]
+        test = test.split(":")
+        if (test[0] == "CPF"):
+            cpf = ''
+            for j in range(len(test[1])):
+                if test[1][j] != ' ' and test[1][j] != '-' and test[1][j] != '.':
+                    cpf = cpf + test[1][j]
+            break
+    return cpf

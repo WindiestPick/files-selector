@@ -1,29 +1,21 @@
 import os
-from docx import Document
-from docx.shared import Inches
+import glob
+from readDocx import GetCPf
+
 
 def List_files_in(path):
-    files = []
-    for (dirpath, dirnames, filenames) in os.walk(path):
-      files.extend(filenames)
+    current_directory = os.path.dirname(os.path.abspath(path))
+    os.chdir(path)
+    files = glob.glob('*.docx')
     return files
-    
-def Show_files(files):
-    
-    for numero,arquivo in enumerate(files):
-        print(arquivo)
 
-def PesquisaCPF(path):
+def PesquisaCPF(path, cpf):
     files = List_files_in(path[0])
     for i in range(len(files)):
-        document = Document(docx = path[1] + files[i])
-        
-        
-        
+        cpfArq = GetCPf(path[1] + files[i])
+        if (cpf == cpfArq):
+            return files[i]
 
-path = ["C:\\Users\\Marketing\\Documents\\Teste","C:\\Users\\Marketing\\Documents\\Teste\\"]
-
-PesquisaCPF(path)
 
 
 #Show_files(files)
