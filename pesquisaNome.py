@@ -26,7 +26,6 @@ import glob
 
 
 def PesquisaNome(text,path):
-    current_directory = os.path.dirname(os.path.abspath(path))
     os.chdir(path)
     files = glob.glob( '*'+ text +'*.*')
     return files
