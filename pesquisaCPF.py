@@ -21,7 +21,7 @@ def PesquisaCPF(path):
         
         
 
-path = ["C:\\Users\\Marketing\\Documents\\Teste","C:\\Users\\Marketing\\Documents\\Teste\\"]
+path = ["D:\\","D:\\"]
 
 PesquisaCPF(path)
 
