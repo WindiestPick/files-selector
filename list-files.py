@@ -2,35 +2,35 @@ import os
 import glob
 from os import walk
 
-def list_files_in(path,files):
-    
-    for (dirpath, dirnames, filenames) in walk(path):
-      files.extend(filenames)
-      break
-    return files
-    
-def show(files):
 
-    for i in range(len(files)):
-        print(files[i])
-    
-        
-def showEnumarete(files):
-    
-    for i in range(len(files)):
-        print(i , ' - ' , files[i])
+def list_files_in(path, archive):
+    for filenames in walk(path):
+        archive.extend(filenames)
+        break
+    return archive
 
 
-def search_files(path,filesToSearch):
+def show(archive):
+    for i in range(len(archive)):
+        print(archive[i])
+
+
+def show_archives(archive):
+    for i in range(len(archive)):
+        print(i, ' - ', archive[i])
+
+
+def search_files(path, archive):
     os.chdir(path)
     text = input("Nome do arquivo: ")
-    filesToSearch = glob.glob( '*'+ text +'*.*')
-    return filesToSearch
+    archive = glob.glob('*' + text + '*.*')
+    return archive
 
-def open_file(path,files):
 
-    selecao = int(input("Numero do arquivo que deseja abrir: "))
-    os.startfile(path + files[selecao])
+def open_file(path, archive):
+    select = int(input("Numero do arquivo que deseja abrir: "))
+    os.startfile(path + archive[select])
+
 
 '''
 def choose_your_destiny():
@@ -57,11 +57,10 @@ def choose_your_destiny():
 '''
 
 local = "D:\\"
-files = []
+archives = []
 search = []
-files = list_files_in(local,files)
-show(files)
-search = search_files(local,files)
-showEnumarete(search)
-open_file(local,search)
-
+files = list_files_in(local, archives)
+show(archives)
+search = search_files(local, archives)
+show_archives(search)
+open_file(local, search)
