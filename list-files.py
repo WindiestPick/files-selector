@@ -7,20 +7,25 @@ def list_files_in(path,files):
     for (dirpath, dirnames, filenames) in walk(path):
       files.extend(filenames)
       break
+    return files
     
-def show_files(files):
+def show(files):
 
-    cont = 0
-    for numero,arquivo in enumerate(files):
-        print(f"",cont,arquivo)
-        cont= cont+1
+    for i in range(len(files)):
+        print(files[i])
+    
+        
+def showEnumarete(files):
+    
+    for i in range(len(files)):
+        print(i , ' - ' , files[i])
+
 
 def search_files(path,filesToSearch):
     os.chdir(path)
     text = input("Nome do arquivo: ")
     filesToSearch = glob.glob( '*'+ text +'*.*')
-    for i in range(len(filesToSearch)):
-        print(i , ' - ' , filesToSearch[i])
+    return filesToSearch
 
 def open_file(path,files):
 
@@ -51,11 +56,12 @@ def choose_your_destiny():
             break       
 '''
 
-local = ""
+local = "D:\\"
 files = []
 search = []
-list_files_in(local,files)
-show_files(files)
-search_files(local,search)
-open_file(local,files)
+files = list_files_in(local,files)
+show(files)
+search = search_files(local,files)
+showEnumarete(search)
+open_file(local,search)
 
