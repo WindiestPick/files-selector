@@ -136,7 +136,7 @@ class Application():
             os.startfile(path[1] + self.arquivo[int(numero) - 1])
     
     def clean(self):
-        self.listArq['text'] = ''
+        self.listbox.delete(0,END)
         self.numeroArq.delete(0,END)
         self.nomeArq.delete(0,END)
         self.cpfArq.delete(0,END)
