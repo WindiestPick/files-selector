@@ -12,6 +12,7 @@ class Application():
     arquivo = []
 
     def __init__(self, master=None):
+
         self.fontePadrao = ("Arial", "10")
         self.primeiroContainer = Frame(master)
         self.primeiroContainer["pady"] = 10
@@ -38,6 +39,9 @@ class Application():
         self.cleanerContainer.pack()
 
 
+        self.scrollbar = Scrollbar(self.terceiroContainer)
+        self.scrollbar.pack(side="right", fill="y")
+        
         self.nomeLabel = Label(self.primeiroContainer, text='Busca Documentos', font=self.fontePadrao)
         self.nomeLabel.pack()
 
@@ -74,10 +78,9 @@ class Application():
         self.buscarCpf.pack(side=LEFT)
         self.buscarCpf["command"] = self.PesquisaC
 
-
-        self.listArq = Label(self.terceiroContainer, font=self.fontePadrao)
-        self.listArq.pack(side=LEFT)
-
+        self.listbox = Listbox(self.terceiroContainer, yscrollcommand=self.scrollbar.set)
+        self.listbox["width"] = 40
+        self.listbox.pack(side="left", fill="both")
         
         self.numeroArq = Entry(self.quartoContainer)
         self.numeroArq["width"] = 10
@@ -101,11 +104,12 @@ class Application():
         self.arquivo = lista
         nomes = ''
         if (len(lista) > 0):
+            self.listbox.delete(0, END)
             for i in range(len(lista)):
-                nomes += "\n" + str(i+1) + " - " + lista[i]
-            self.listArq["text"] = nomes
+                self.listbox.insert("end", "\n" + str(i+1) + " - " + lista[i])
         else:
-            self.listArq["text"] = "Nenhum resultado encontrado"
+            self.listbox.delete(0, END)
+            self.listbox.insert("end","Nenhum resultado encontrado")
     
     def PesquisaC(self):
         pesquisa = self.cpfArq.get()
@@ -116,12 +120,14 @@ class Application():
         if pesquisa != "":
             nome = PesquisaCPF(path, formato)
             if (nome != None):
-                self.arquivo = [nome]
-                self.listArq["text"] = "1 - " + nome
+                self.listbox.delete(0, END)
+                self.listbox.insert("end", "\n" + str(i+1) + " - " + nome)
             else:
-                self.listArq["text"] = "Nenhum arquivo encontrado"
+                self.listbox.delete(0, END)
+                self.listbox.insert("end","Nenhum resultado encontrado")
         else:
-            self.listArq["text"] = "Pesquisa por CPF não aceita campo vazio"
+            self.listbox.delete(0, END)
+            self.listbox.insert("end","Pesquisa por CPF não aceita campo vazio")
 
 
     def AbreArq(self):
@@ -141,7 +147,7 @@ class Application():
 
 
 path = ["C:\\Users\\Marketing\\Documents\\Teste","C:\\Users\\Marketing\\Documents\\Teste\\"]
-root = Tk(className="Finding 2")
+root = Tk(className="Finding 1")
 Application(root)
 root.mainloop()
 
