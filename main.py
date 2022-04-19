@@ -120,8 +120,9 @@ class Application():
         if pesquisa != "":
             nome = PesquisaCPF(path, formato)
             if (nome != None):
+                self.arquivo = [nome]
                 self.listbox.delete(0, END)
-                self.listbox.insert("end", "\n" + str(i+1) + " - " + nome)
+                self.listbox.insert("end", "\n1" + " - " + nome)
             else:
                 self.listbox.delete(0, END)
                 self.listbox.insert("end","Nenhum resultado encontrado")
@@ -133,7 +134,8 @@ class Application():
     def AbreArq(self):
         numero = self.numeroArq.get()
         if numero != "":
-            os.startfile(path[1] + self.arquivo[int(numero) - 1])
+            if int(numero) <= len(self.arquivo):
+                os.startfile(path[1] + self.arquivo[int(numero) - 1])
     
     def clean(self):
         self.listbox.delete(0,END)
