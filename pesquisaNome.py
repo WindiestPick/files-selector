@@ -26,6 +26,7 @@ import glob
 
 
 def PesquisaNome(text,path):
-    os.chdir(path)
+    os.chdir(path[0])
     files = glob.glob( '*'+ text +'*.*')
+    os.chdir(path[2])
     return files
