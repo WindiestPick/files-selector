@@ -1,6 +1,7 @@
 from email.policy import default
 from tkinter import *
 import os
+from SaveSearch import *
 
 class Configuration():
 
@@ -89,5 +90,5 @@ class Configuration():
         arq.close()
 
     def start(self):
-        #updateCache(self.path)
+        update_cache(self.path)
         return
