@@ -159,31 +159,23 @@ class Application():
 
     def SearchV(self):
         self.path = self.getPath()
-        search = self.vulgoArq.get()
-        print(search)
-        form = ""
-        for i in range(len(search)):
-            if(search[i] != " " and search[i]):
-                form += search[i]
-                print(form)
-        if search != "":
-            print("entrou")
-            name = search_vulgo(self.path, form)
-            print(name)
-            if name != None:
-                
-                self.arquivo = [name]
+        pesquisa = self.vulgoArq.get()
+        formato = '';nome  = ''
+        for i in range(len(pesquisa)):
+                formato += pesquisa[i]
+        if pesquisa != "":
+            nome = search_vulgo(self.path, formato)
+            print(nome)
+            if (nome != None):
+                self.arquivo = [nome]
                 self.listbox.delete(0, END)
-                self.listbox.insert("end", "\n1" + " - " + name)
+                self.listbox.insert("end", "\n1" + " - " + nome)
             else:
-               
                 self.listbox.delete(0, END)
-                self.listbox.insert("end", "Nenhum resultado encontrado")
+                self.listbox.insert("end","Nenhum resultado encontrado")
         else:
-         
             self.listbox.delete(0, END)
-            self.listbox.insert("end", "Pesquisa por Vulgo não aceita campo vazio")
-                
+            self.listbox.insert("end","Pesquisa por VULGO não aceita campo vazio")
 
 
     def AbreArq(self):

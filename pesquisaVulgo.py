@@ -16,17 +16,25 @@ def list_files_in(path):
 
 def search_vulgo(path,vulgo):
     files = list_files_in(path)
+    vulgoArq = ""
+    print("search_vulgo no INICIO")
     print(files)
     arq = get_vulgo_cache(vulgo, path[2])
+    print("arq do seach vulgo DEPOIS INICIO")
     print(arq)
     if arq == "":
         for i in range(len(files)):
             vulgoArq = GetVulgo(path[1] + files[i])
+            print("vulgo arqa baixo:")
+            print(vulgoArq)
             if (vulgo == vulgoArq):
                 set_vulgo_cache(vulgo, files[i], path[2])
+                print("FILESSS DO SEARCH")
+                print(files[i])
                 return files[i]
     else:
-        print("arqq a baixo")
+
+        print("VULGO a baixo (DO RETURN)")
         print(arq)
         return arq
 
