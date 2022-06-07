@@ -1,5 +1,6 @@
 from pesquisaNome import PesquisaNome
 from pesquisaCPF import PesquisaCPF
+from pesquisaVulgo import search_vulgo
 from config import Configuracao
 from tkinter import *
 import os
@@ -24,7 +25,13 @@ class Application():
         self.cpfContainer["padx"] = 20
         self.cpfContainer["pady"] = 5
         self.cpfContainer.pack()
-
+        
+        self.vulgoContainer = Frame(master)
+        self.vulgoContainer["padx"] = 20
+        self.vulgoContainer["pady"] = 5
+        self.vulgoContainer.pack()
+        
+        
         self.terceiroContainer = Frame(master)
         self.terceiroContainer["padx"] = 20
         self.terceiroContainer.pack()
@@ -33,6 +40,7 @@ class Application():
         self.quartoContainer["pady"] = 20
         self.quartoContainer.pack()
         
+       
         self.cleanerContainer = Frame(master)
         self.cleanerContainer["pady"] = 20
         self.cleanerContainer.pack()
@@ -61,7 +69,7 @@ class Application():
         self.buscar["command"] = self.PesquisaN
         
         
-        self.cpfLabel = Label(self.cpfContainer,text="Numero do CPF", font=self.fontePadrao)
+        self.cpfLabel = Label(self.cpfContainer,text="Número do CPF", font=self.fontePadrao)
         self.cpfLabel.pack(side=LEFT)
 
         self.cpfArq = Entry(self.cpfContainer)
@@ -77,6 +85,20 @@ class Application():
 
         self.cpfLabel = Label(self.terceiroContainer,text="Selecione um Arquivo: ", font=self.fontePadrao)
         self.cpfLabel.pack(side="top")
+
+        self.vulgoLabel = Label(self.vulgoContainer, text="Vulgo", font=self.fontePadrao)
+        self.vulgoLabel.pack(side=LEFT)
+
+        self.vulgoArq = Entry(self.vulgoContainer)
+        self.vulgoArq["width"] = 35
+        self.vulgoArq["font"] = self.fontePadrao
+        self.vulgoArq.pack(side=LEFT)
+
+        self.searchVulgo = Button(self.vulgoContainer)
+        self.searchVulgo["text"] = "Buscar por Vulgo"
+        self.searchVulgo.pack(side=LEFT)
+        self.searchVulgo["command"] = self.SearchV
+
 
         self.listbox = Listbox(self.terceiroContainer, yscrollcommand=self.scrollbar.set)
         self.listbox["width"] = 50
@@ -134,6 +156,34 @@ class Application():
         else:
             self.listbox.delete(0, END)
             self.listbox.insert("end","Pesquisa por CPF não aceita campo vazio")
+
+    def SearchV(self):
+        self.path = self.getPath()
+        search = self.vulgoArq.get()
+        print(search)
+        form = ""
+        for i in range(len(search)):
+            if(search[i] != " " and search[i]):
+                form += search[i]
+                print(form)
+        if search != "":
+            print("entrou")
+            name = search_vulgo(self.path, form)
+            print(name)
+            if name != None:
+                
+                self.arquivo = [name]
+                self.listbox.delete(0, END)
+                self.listbox.insert("end", "\n1" + " - " + name)
+            else:
+               
+                self.listbox.delete(0, END)
+                self.listbox.insert("end", "Nenhum resultado encontrado")
+        else:
+         
+            self.listbox.delete(0, END)
+            self.listbox.insert("end", "Pesquisa por Vulgo não aceita campo vazio")
+                
 
 
     def AbreArq(self):

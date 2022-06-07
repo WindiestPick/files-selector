@@ -1,6 +1,7 @@
 from tkinter import *
 import os
 from pesquisaCPF import AtualizaCache
+from pesquisaVulgo import update_cache
 
 class Configuracao():
     def __init__(self, master=None):
@@ -78,3 +79,5 @@ class Configuracao():
 
     def start(self):
         AtualizaCache(self.path)
+        update_cache(self.path)
+        

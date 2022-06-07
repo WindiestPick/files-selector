@@ -20,6 +20,7 @@ def PesquisaCPF(path, cpf):
     if arq == "":
         for i in range(len(files)):
             cpfArq = GetCPf(path[1] + files[i])
+           
             if (cpf == cpfArq):
                 SetCpfCache(cpf, files[i], path[2])
                 return files[i]

@@ -116,9 +116,6 @@ def docx_to_text(file):
 
 
 def GetCPf(file):
-    doc = ReadDocFile(file)
-    doc.load_document()
-
     # Use docx2txt
     a = docx_to_text(file)
     a = a.split('\n')
@@ -136,3 +133,21 @@ def GetCPf(file):
                     cpf = cpf + test[1][j]
             break
     return cpf
+
+def GetVulgo(file):
+    # Use docx2txt
+    a = docx_to_text(file)
+    a = a.split('\n')
+    b = []
+    for i in range(len(a)):
+        if (a[i] != ""):
+            b.append(a[i])
+    for i in range(len(b)):
+        test = b[i]
+        test = test.split(":")
+        if (test[0] == "Vulgo" or test[0] == "vulgo"):
+            vulgo = ''
+            for j in range(len(test[1])):
+                    vulgo = vulgo + test[1][j]
+            break
+    return vulgo
