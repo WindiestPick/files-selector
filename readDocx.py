@@ -4,6 +4,7 @@ from xml.dom import NotFoundErr
 from docx import Document
 from docx.opc.exceptions import PackageNotFoundError
 
+
 @dataclass
 class FormatFilter:
     bold: List or str = field(default_factory = lambda: ["None", "True"])
@@ -155,5 +156,8 @@ def GetVulgo(file):
                     print(vulgo)
             break
     print("antes do return final")
+    vulgo = vulgo.replace("\t", '')
+    vulgo = vulgo.replace(" ", '')
     print(vulgo)
     return vulgo
+

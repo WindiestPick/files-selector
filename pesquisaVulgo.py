@@ -26,7 +26,7 @@ def search_vulgo(path,vulgo):
         for i in range(len(files)):
             vulgoArq = GetVulgo(path[1] + files[i])
             print("vulgo arqa baixo:")
-            print(vulgoArq)
+            print("|||"+vulgoArq +"||||"+ vulgo+"|||fas")
             if (vulgo == vulgoArq):
                 set_vulgo_cache(vulgo, files[i], path[2])
                 print("FILESSS DO SEARCH")
