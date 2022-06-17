@@ -136,6 +136,13 @@ class Application():
         self.path = self.getPath()
         pesquisa = self.pesquisa.get()
         formato = ''
+        t = self.validaCPF(pesquisa)
+
+        if t == 0:
+            self.listbox.delete(0, END)
+            self.listbox.insert("end","Pesquisa por CPF não aceita letras")
+            return
+
         for i in range(len(pesquisa)):
             if (pesquisa[i] != ' ' and pesquisa[i] != '-' and pesquisa[i] != '.'):
                 formato += pesquisa[i]
@@ -155,15 +162,14 @@ class Application():
     def SearchV(self):
         self.path = self.getPath()
         pesquisa = self.pesquisa.get()
-        formato = '';nome  = ''
-        for i in range(len(pesquisa)):
-                formato += pesquisa[i]
+
         if pesquisa != "":
-            nome = search_vulgo(self.path, formato)
-            if (nome != None):
-                self.arquivo = [nome]
+            nome = search_vulgo(self.path, pesquisa)
+            if (nome != []):
+                self.arquivo = nome
                 self.listbox.delete(0, END)
-                self.listbox.insert("end", "\n1" + " - " + nome)
+                for i in range(len(nome)):
+                    self.listbox.insert("end", "\n" + str(i+1) + " - " + nome[i])
             else:
                 self.listbox.delete(0, END)
                 self.listbox.insert("end","Nenhum resultado encontrado")
@@ -182,8 +188,7 @@ class Application():
     
     def clean(self):
         self.listbox.delete(0,END)
-        self.nomeArq.delete(0,END)
-        self.cpfArq.delete(0,END)
+        self.pesquisa.delete(0,END)
         
     def select_item(self):
         for i in self.listbox.curselection():
@@ -208,6 +213,16 @@ class Application():
             arq.close()
             return b
     
+    def validaCPF(self, a):
+        alfa = ['1','2','3','4','5','6','7','8','9','-','.']
+        for i in a:
+            f = 0
+            for j in alfa:
+                if i == j:
+                    f += 1
+            if f == 0:
+                return 0
+        return 1
 
 
 root = Tk(className="Finding 2")

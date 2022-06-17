@@ -16,28 +16,33 @@ def list_files_in(path):
 
 def search_vulgo(path,vulgo):
     files = list_files_in(path)
-    vulgoArq = ""
+    returnList = []
+    vulgoArq = ''
+    vulgo = vulgo.replace(" ", "")
     arq = get_vulgo_cache(vulgo, path[2])
-    if arq == "":
+    if arq == []:
         for i in range(len(files)):
             vulgoArq = GetVulgo(path[1] + files[i])
+            print(vulgo.lower() +"    "+ vulgoArq.lower())
             if (vulgo.lower() == vulgoArq.lower()):
                 set_vulgo_cache(vulgo, files[i], path[2])
-                return files[i]
+                returnList.append(files[i])
+        return returnList
     else:
         return arq
 
 
 def get_vulgo_cache(vulgo, path):
     log = io.open(path + "logVulgo.txt", "r", encoding="utf-8")
-    vulgoList = log.readline()
+    returnList = []
+    vulgoList = log.readlines()
+    vulgo = vulgo.replace(" ","")
     for i in range(len(vulgoList)):
         vulgoArq = vulgoList[i].split(":")
-        if(vulgoArq[0] == vulgo):
-            log.close()
-            return vulgoArq[1].replace('\n', '')
-        log.close()
-        return ""
+        if(vulgoArq[0].lower() == vulgo.lower()):
+            returnList.append(vulgoArq[1].replace('\n', ''))
+    log.close()
+    return returnList
 
 
 def set_vulgo_cache(vulgo, nameArq, path):
@@ -51,5 +56,5 @@ def update_cache(path):
     log.write("")
     log.close()
     for i in range(len(files)):
-        vulgoArq = GetVulgo(path[1] + files[1])
+        vulgoArq = GetVulgo(path[1] + files[i])
         set_vulgo_cache(vulgoArq, files[i], path[2])
