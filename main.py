@@ -16,6 +16,11 @@ class Application():
         self.primeiroContainer["pady"] = 10
         self.primeiroContainer.pack()
 
+        self.selectContainer = Frame(master)
+        self.selectContainer["padx"] = 20
+        self.selectContainer["pady"] = 5
+        self.selectContainer.pack()
+
         self.nomeContainer = Frame(master)
         self.nomeContainer["padx"] = 20
         self.nomeContainer["pady"] = 5
@@ -52,53 +57,34 @@ class Application():
         self.nomeLabel = Label(self.primeiroContainer, text='Busca Documentos', font=self.fontePadrao)
         self.nomeLabel.pack()
 
-        self.nomeLabel = Label(self.nomeContainer,text="Nome do Arquivo", font=self.fontePadrao)
-        self.nomeLabel.pack(side=TOP)
-        self.nomeLabel.pack(side=LEFT)
+        self.radioValue = IntVar()
 
-        self.nomeArq = Entry(self.nomeContainer)
-        self.nomeArq["width"] = 30
-        self.nomeArq["font"] = self.fontePadrao
-        self.nomeArq.pack(side=TOP)
-        self.nomeArq.pack(side=LEFT)
+        self.rdioOne = Radiobutton(self.selectContainer, text='Buscar por arquivo',
+                             variable= self.radioValue, value=0, indicatoron=0)
+        self.rdioTwo = Radiobutton(self.selectContainer, text='Buscar por CPF',
+                             variable= self.radioValue, value=1, indicatoron=0) 
+        self.rdioThree = Radiobutton(self.selectContainer, text='Buscar por "Vulgo"',
+                             variable= self.radioValue, value=2, indicatoron=0)
+
+        self.rdioOne.grid(column=1, row=0, sticky="W")
+        self.rdioTwo.grid(column=2, row=0, sticky="W")
+        self.rdioThree.grid(column=3, row=0, sticky="W")
+
+        self.pesquisa = Entry(self.nomeContainer)
+        self.pesquisa["width"] = 30
+        self.pesquisa["font"] = self.fontePadrao
+        self.pesquisa.pack(side=TOP)
+        self.pesquisa.pack(side=LEFT)
 
         self.buscar = Button(self.nomeContainer)
-        self.buscar["text"] = "Buscar por nome"
+        self.buscar["text"] = "Buscar"
         self.buscar.pack(expand=1)
         self.buscar.pack(side=LEFT)
-        self.buscar["command"] = self.PesquisaN
-        
-        
-        self.cpfLabel = Label(self.cpfContainer,text="Número do CPF", font=self.fontePadrao)
-        self.cpfLabel.pack(side=LEFT)
-
-        self.cpfArq = Entry(self.cpfContainer)
-        self.cpfArq["width"] = 30
-        self.cpfArq["font"] = self.fontePadrao
-        self.cpfArq.pack(side=LEFT)
-
-        self.buscarCpf = Button(self.cpfContainer)
-        self.buscarCpf["text"] = "Buscar por CPF"
-        self.buscarCpf.pack(side=LEFT)
-        self.buscarCpf["command"] = self.PesquisaC
+        self.buscar["command"] = self.SelecionaPesquisa
 
 
         self.cpfLabel = Label(self.terceiroContainer,text="Selecione um Arquivo: ", font=self.fontePadrao)
         self.cpfLabel.pack(side="top")
-
-        self.vulgoLabel = Label(self.vulgoContainer, text="Vulgo", font=self.fontePadrao)
-        self.vulgoLabel.pack(side=LEFT)
-
-        self.vulgoArq = Entry(self.vulgoContainer)
-        self.vulgoArq["width"] = 35
-        self.vulgoArq["font"] = self.fontePadrao
-        self.vulgoArq.pack(side=LEFT)
-
-        self.searchVulgo = Button(self.vulgoContainer)
-        self.searchVulgo["text"] = "Buscar por Vulgo"
-        self.searchVulgo.pack(side=LEFT)
-        self.searchVulgo["command"] = self.SearchV
-
 
         self.listbox = Listbox(self.terceiroContainer, yscrollcommand=self.scrollbar.set)
         self.listbox["width"] = 50
@@ -123,9 +109,18 @@ class Application():
         self.configuracao.pack(side="right")
         self.configuracao["command"] = self.configura
 
+    def SelecionaPesquisa(self):
+        b = self.radioValue.get()
+        if b == 0:
+            self.PesquisaN()
+        elif b == 1:
+            self.PesquisaC()
+        elif b == 2:
+            self.SearchV()
+
     def PesquisaN(self):
         self.path = self.getPath()
-        pesquisa = self.nomeArq.get()
+        pesquisa = self.pesquisa.get()
         lista = PesquisaNome(pesquisa, self.path)
         self.arquivo = lista
         nomes = ''
@@ -139,7 +134,7 @@ class Application():
     
     def PesquisaC(self):
         self.path = self.getPath()
-        pesquisa = self.cpfArq.get()
+        pesquisa = self.pesquisa.get()
         formato = ''
         for i in range(len(pesquisa)):
             if (pesquisa[i] != ' ' and pesquisa[i] != '-' and pesquisa[i] != '.'):
@@ -159,13 +154,12 @@ class Application():
 
     def SearchV(self):
         self.path = self.getPath()
-        pesquisa = self.vulgoArq.get()
+        pesquisa = self.pesquisa.get()
         formato = '';nome  = ''
         for i in range(len(pesquisa)):
                 formato += pesquisa[i]
         if pesquisa != "":
             nome = search_vulgo(self.path, formato)
-            print(nome)
             if (nome != None):
                 self.arquivo = [nome]
                 self.listbox.delete(0, END)
