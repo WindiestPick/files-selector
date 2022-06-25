@@ -1,3 +1,4 @@
+from lib2to3.pgen2.token import VBAR
 from pesquisaNome import PesquisaNome
 from pesquisaCPF import PesquisaCPF
 from pesquisaVulgo import search_vulgo
@@ -53,7 +54,10 @@ class Application():
 
         self.scrollbar = Scrollbar(self.terceiroContainer)
         self.scrollbar.pack(side="right", fill=BOTH)
-        
+
+        self.scrollbar2 = Scrollbar(self.terceiroContainer, orient="horizontal")
+        self.scrollbar2.pack(side=BOTTOM, fill=X)
+
         self.nomeLabel = Label(self.primeiroContainer, text='Busca Documentos', font=self.fontePadrao)
         self.nomeLabel.pack()
 
@@ -86,11 +90,12 @@ class Application():
         self.cpfLabel = Label(self.terceiroContainer,text="Selecione um Arquivo: ", font=self.fontePadrao)
         self.cpfLabel.pack(side="top")
 
-        self.listbox = Listbox(self.terceiroContainer, yscrollcommand=self.scrollbar.set)
+        self.listbox = Listbox(self.terceiroContainer, yscrollcommand=self.scrollbar.set, xscrollcommand=self.scrollbar2.set)
         self.listbox["width"] = 50
         self.listbox.pack(side="bottom", fill="both")
 
         self.scrollbar.config(command=self.listbox.yview)
+        self.scrollbar2.config(command=self.listbox.xview)
         
         self.abrir = Button(self.quartoContainer)
         self.abrir["text"] = "abrir"

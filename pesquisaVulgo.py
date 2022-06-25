@@ -3,6 +3,7 @@ import os
 import glob
 import io
 from readDocx import GetVulgo
+from formatStr import formata
 
 
 def list_files_in(path):
@@ -19,11 +20,12 @@ def search_vulgo(path,vulgo):
     returnList = []
     vulgoArq = ''
     vulgo = vulgo.replace(" ", "")
+    vulgo = formata(vulgo)
     arq = get_vulgo_cache(vulgo, path[2])
     if arq == []:
         for i in range(len(files)):
             vulgoArq = GetVulgo(path[1] + files[i])
-            print(vulgo.lower() +"    "+ vulgoArq.lower())
+            vulgoArq = formata(vulgoArq)
             if (vulgo.lower() == vulgoArq.lower()):
                 set_vulgo_cache(vulgo, files[i], path[2])
                 returnList.append(files[i])
@@ -36,10 +38,11 @@ def get_vulgo_cache(vulgo, path):
     log = io.open(path + "logVulgo.txt", "r", encoding="utf-8")
     returnList = []
     vulgoList = log.readlines()
-    vulgo = vulgo.replace(" ","")
+    #vulgo = vulgo.replace(" ","")  -Já tem um lá em cima
     for i in range(len(vulgoList)):
         vulgoArq = vulgoList[i].split(":")
-        if(vulgoArq[0].lower() == vulgo.lower()):
+        compara = formata(vulgoArq[0])
+        if(compara.lower() == vulgo.lower()):
             returnList.append(vulgoArq[1].replace('\n', ''))
     log.close()
     return returnList
