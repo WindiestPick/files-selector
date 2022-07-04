@@ -5,6 +5,8 @@ from pesquisaVulgo import search_vulgo
 from config import Configuracao
 from tkinter import *
 import os
+import win32gui
+import win32con
 
 class Application():
     arquivo = []
@@ -229,6 +231,8 @@ class Application():
                 return 0
         return 1
 
+hide = win32gui.GetForegroundWindow()
+win32gui.ShowWindow(hide , win32con.SW_HIDE)
 
 root = Tk(className="Finding 2")
 Application(root)
