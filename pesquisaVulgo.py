@@ -24,8 +24,8 @@ def search_vulgo(path,vulgo):
     if arq == []:
         for i in range(len(files)):
             vulgoArq = GetVulgo(path[1] + files[i])
-            vulgoArq = formata(vulgoArq)
-            if (vulgo.lower() == vulgoArq.lower()):
+            vulgoArq = formata(vulgoArq).lower()
+            if (vulgoArq.__contains__(vulgo.lower())):
                 set_vulgo_cache(vulgo, files[i], path[2])
                 returnList.append(files[i])
         return returnList

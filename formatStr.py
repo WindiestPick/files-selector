@@ -13,8 +13,9 @@ def formata(palavra):
 
     res = res.replace("ã",'a')
     res = res.replace("õ",'o')
-
     res = res.replace("à",'a')
+
+    res = res.replace(" ","-")
 
     return res
 
