@@ -1,4 +1,3 @@
-from lib2to3.pgen2.token import VBAR
 from pesquisaNome import PesquisaNome
 from pesquisaCPF import PesquisaCPF
 from pesquisaVulgo import search_vulgo
@@ -181,7 +180,6 @@ class Application():
         else:
             self.listbox.delete(0, END)
             self.listbox.insert("end","Pesquisa por VULGO não aceita campo vazio")
-
 
     def AbreArq(self):
         numero = self.select_item()

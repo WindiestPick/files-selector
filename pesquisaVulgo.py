@@ -5,7 +5,6 @@ import io
 from readDocx import GetVulgo
 from formatStr import formata
 
-
 def list_files_in(path):
     os.chdir(path[0])
     files = glob.glob('*.docx')
@@ -33,7 +32,6 @@ def search_vulgo(path,vulgo):
     else:
         return arq
 
-
 def get_vulgo_cache(vulgo, path):
     log = io.open(path + "logVulgo.txt", "r", encoding="utf-8")
     returnList = []
@@ -46,7 +44,6 @@ def get_vulgo_cache(vulgo, path):
             returnList.append(vulgoArq[1].replace('\n', ''))
     log.close()
     return returnList
-
 
 def set_vulgo_cache(vulgo, nameArq, path):
     log = io.open(path + "logVulgo.txt", "a", encoding="utf-8")
