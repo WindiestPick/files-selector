@@ -1,4 +1,3 @@
-
 def formata(palavra):
     res = palavra.replace("á",'a')
     res = res.replace("é",'e')
