@@ -5,6 +5,9 @@ import io
 from readDocx import GetVulgo
 from formatStr import formata
 
+from tkinter import *
+from tkinter.ttk import *
+
 def list_files_in(path):
     os.chdir(path[0])
     files = glob.glob('*.docx')
@@ -50,11 +53,17 @@ def set_vulgo_cache(vulgo, nameArq, path):
     log.write("\n" + vulgo + ":" + nameArq)
     log.close()
 
-def update_cache(path):
+def update_cache(path, ws, pb1):
     files = list_files_in(path)
     log = io.open("logVulgo.txt", "w")
     log.write("")
     log.close()
+
+    jump = 100/len(files)
+
     for i in range(len(files)):
+        ws.update_idletasks()
+        pb1['value'] += jump
+
         vulgoArq = GetVulgo(path[1] + files[i])
         set_vulgo_cache(vulgoArq, files[i], path[2])

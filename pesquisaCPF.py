@@ -3,6 +3,8 @@ import os
 import glob
 import io
 from readDocx import GetCPf
+from tkinter import *
+from tkinter.ttk import *
 
 
 def List_files_in(path):
@@ -43,14 +45,24 @@ def GetCpfCache(cpf, path):
     log.close()
     return ""
 
-def AtualizaCache(path):
+def AtualizaCache(path, ws, pb1):
     files = List_files_in(path)
     log = io.open("logCpf.txt", "w")
     log.write("")
     log.close()
+
+    jump = 100 / len(files)
+
     for i in range(len(files)):
+        ws.update_idletasks()
+        pb1['value'] += jump
+
         cpfArq = GetCPf(path[1] + files[i])
         SetCpfCache(cpfArq, files[i], path[2])
+
+    pb1["value"] = 0
+    ws.update_idletasks()
+
 
 
 

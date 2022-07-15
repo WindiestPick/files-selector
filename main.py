@@ -7,8 +7,6 @@ from config import Configuracao
 from tkinter import *
 from tkinter.ttk import *
 import os
-import win32gui
-import win32con
 
 class Application():
     arquivo = []
@@ -236,7 +234,8 @@ class Application():
 
     def configura(self):
         conf = Tk(className="Configuração")
-        conf.geometry("400x250")
+        conf.geometry("400x280")
+        conf.iconbitmap(".\\photo\\Finding.ico")
         Configuracao(conf)
         conf.mainloop()
 
@@ -263,10 +262,9 @@ class Application():
                 return 0
         return 1
 
-hide = win32gui.GetForegroundWindow()
-win32gui.ShowWindow(hide , win32con.SW_HIDE)
 
 root = Tk(className="Finding 2")
+root.iconbitmap(".\\photo\\Finding.ico")
 root.geometry("400x500")
 Application(root)
 root.mainloop()
