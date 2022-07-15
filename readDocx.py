@@ -147,7 +147,7 @@ def GetVulgo(file):
     for i in range(len(b)):
         test = b[i]
         test = test.split(":")
-        if (test[0] == "Vulgo" or test[0] == "vulgo"):
+        if (test[0] == "Vulgo" or test[0] == "ALCUNHHA" or test[0] == "Alcunha"):
             for j in range(len(test[1])):
                     vulgo = vulgo + test[1][j]
             break

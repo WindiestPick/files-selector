@@ -7,6 +7,8 @@ from config import Configuracao
 from tkinter import *
 from tkinter.ttk import *
 import os
+import win32gui
+import win32con
 
 class Application():
     arquivo = []
@@ -261,6 +263,8 @@ class Application():
                 return 0
         return 1
 
+hide = win32gui.GetForegroundWindow()
+win32gui.ShowWindow(hide , win32con.SW_HIDE)
 
 root = Tk(className="Finding 2")
 root.geometry("400x500")
