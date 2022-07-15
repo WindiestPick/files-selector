@@ -1,8 +1,11 @@
+from tkinter.ttk import Style
 from pesquisaNome import PesquisaNome
 from pesquisaCPF import PesquisaCPF
 from pesquisaVulgo import search_vulgo
+from pesquisaCpfPdf import PesquisaCPFPDF
 from config import Configuracao
 from tkinter import *
+from tkinter.ttk import *
 import os
 
 class Application():
@@ -11,45 +14,35 @@ class Application():
 
     def __init__(self, master=None):
         self.getPath()
+
+        self.menubar = Menu(master)
+        self.file = Menu(self.menubar, tearoff = 0)
+        self.menubar.add_cascade(label ='Opções', menu = self.file)
+        self.file.add_command(label ='Configurações', command = self.configura)
+        self.file.add_separator()
+        self.file.add_command(label ='Sair', command = master.destroy)
+
         self.fontePadrao = ("Arial", "10")
+        self.fontGrande = ("Arial Black", "15")
+        self.fonteSelect = ("Arial negrito", "10")
+
         self.primeiroContainer = Frame(master)
-        self.primeiroContainer["pady"] = 10
-        self.primeiroContainer.pack()
+        self.primeiroContainer.pack(pady = 10)
 
         self.selectContainer = Frame(master)
-        self.selectContainer["padx"] = 20
-        self.selectContainer["pady"] = 5
-        self.selectContainer.pack()
+        self.selectContainer.pack(pady = 10)
 
         self.nomeContainer = Frame(master)
-        self.nomeContainer["padx"] = 20
-        self.nomeContainer["pady"] = 5
-        self.nomeContainer.pack()
+        self.nomeContainer.pack(pady = 10)
 
-        self.cpfContainer = Frame(master)
-        self.cpfContainer["padx"] = 20
-        self.cpfContainer["pady"] = 5
-        self.cpfContainer.pack()
-        
-        self.vulgoContainer = Frame(master)
-        self.vulgoContainer["padx"] = 20
-        self.vulgoContainer["pady"] = 5
-        self.vulgoContainer.pack()
-        
-        
         self.terceiroContainer = Frame(master)
-        self.terceiroContainer["padx"] = 20
-        self.terceiroContainer.pack()
+        self.terceiroContainer.pack(pady = 10)
 
         self.quartoContainer = Frame(master)
-        self.quartoContainer["pady"] = 20
-        self.quartoContainer.pack()
-        
-       
-        self.cleanerContainer = Frame(master)
-        self.cleanerContainer["pady"] = 20
-        self.cleanerContainer.pack()
+        self.quartoContainer.pack(pady = 10)
 
+        self.cleanerContainer = Frame(master)
+        self.cleanerContainer.pack(pady = 10)
 
         self.scrollbar = Scrollbar(self.terceiroContainer)
         self.scrollbar.pack(side="right", fill=BOTH)
@@ -57,61 +50,72 @@ class Application():
         self.scrollbar2 = Scrollbar(self.terceiroContainer, orient="horizontal")
         self.scrollbar2.pack(side=BOTTOM, fill=X)
 
-        self.nomeLabel = Label(self.primeiroContainer, text='Busca Documentos', font=self.fontePadrao)
+        self.nomeLabel = Label(self.primeiroContainer, text='Busca Documentos', font=self.fontGrande)
         self.nomeLabel.pack()
 
         self.radioValue = IntVar()
+        self.tiulo = Label(self.selectContainer, text = 'Todos os Arquivos: ', font=self.fonteSelect)
+        self.tiulo2 = Label(self.selectContainer, text = 'Arquivos em Docx: ', font=self.fonteSelect)
+        self.tiulo3 = Label(self.selectContainer, text = 'Arquivos em PDF: ', font=self.fonteSelect)
 
-        self.rdioOne = Radiobutton(self.selectContainer, text='Buscar por arquivo',
-                             variable= self.radioValue, value=0, indicatoron=0)
-        self.rdioTwo = Radiobutton(self.selectContainer, text='Buscar por CPF',
-                             variable= self.radioValue, value=1, indicatoron=0) 
-        self.rdioThree = Radiobutton(self.selectContainer, text='Buscar por "Vulgo"',
-                             variable= self.radioValue, value=2, indicatoron=0)
+        self.rdioOne = Radiobutton(self.selectContainer, text='Nome',
+                             variable= self.radioValue, value=0,)
 
-        self.rdioOne.grid(column=1, row=0, sticky="W")
-        self.rdioTwo.grid(column=2, row=0, sticky="W")
-        self.rdioThree.grid(column=3, row=0, sticky="W")
+        self.rdioTwo = Radiobutton(self.selectContainer, text='CPF',
+                             variable= self.radioValue, value=1) 
+        self.rdioThree = Radiobutton(self.selectContainer, text='"Vulgo"',
+                             variable= self.radioValue, value=2)
+        self.rdioFour = Radiobutton(self.selectContainer, text='CPF 🄱🄴🅃🄰',
+                             variable= self.radioValue, value=3)
+
+
+        self.tiulo.grid(column=1,row=0, sticky="W",padx = 5)
+        self.rdioOne.grid(column=2, row=0, sticky="W", padx = 5)
+        self.rdioOne["width"]=10
+
+        self.tiulo2.grid(column=1,row=1, sticky="W", padx = 5)
+        self.rdioTwo.grid(column=2, row=1, sticky="W", padx = 5)
+        self.rdioTwo["width"]=10
+        self.rdioThree.grid(column=3, row=1, sticky="W", padx = 5)
+        self.rdioThree["width"]=10
+
+        self.tiulo3.grid(column=1,row=2,sticky="W", padx = 5)
+        self.rdioFour.grid(column=2, row=2, sticky="W", padx = 5)
+        self.rdioFour["width"]=10
 
         self.pesquisa = Entry(self.nomeContainer)
-        self.pesquisa["width"] = 30
+        self.pesquisa["width"] = 34
         self.pesquisa["font"] = self.fontePadrao
         self.pesquisa.pack(side=TOP)
         self.pesquisa.pack(side=LEFT)
 
         self.buscar = Button(self.nomeContainer)
         self.buscar["text"] = "Buscar"
+        self.buscar["width"] = 10
         self.buscar.pack(expand=1)
         self.buscar.pack(side=LEFT)
         self.buscar["command"] = self.SelecionaPesquisa
 
-
-        self.cpfLabel = Label(self.terceiroContainer,text="Selecione um Arquivo: ", font=self.fontePadrao)
+        self.cpfLabel = Label(self.terceiroContainer,text="Selecione um Arquivo: ", font=self.fonteSelect)
         self.cpfLabel.pack(side="top")
 
-        self.listbox = Listbox(self.terceiroContainer, yscrollcommand=self.scrollbar.set, xscrollcommand=self.scrollbar2.set)
+        self.listbox = Listbox(self.terceiroContainer, yscrollcommand=self.scrollbar.set, 
+                                xscrollcommand=self.scrollbar2.set)
         self.listbox["width"] = 50
         self.listbox.pack(side="bottom", fill="both")
 
+        self.listbox.bind('<Double-1>', self.AbreArq)
+
         self.scrollbar.config(command=self.listbox.yview)
         self.scrollbar2.config(command=self.listbox.xview)
-        
-        self.abrir = Button(self.quartoContainer)
-        self.abrir["text"] = "abrir"
-        self.abrir["width"] = 30
-        self.abrir["height"] = 2
-        self.abrir.pack(side=RIGHT)
-        self.abrir["command"] = self.AbreArq
 
         self.limpa = Button(self.cleanerContainer)
         self.limpa["text"] = "limpar"
         self.limpa.pack(side="left")
         self.limpa["width"] = 20
         self.limpa["command"] = self.clean
-        
-        self.configuracao = Button(self.cleanerContainer, text="Configurações")
-        self.configuracao.pack(side="right")
-        self.configuracao["command"] = self.configura
+
+        master.config(menu = self.menubar)
 
     def SelecionaPesquisa(self):
         b = self.radioValue.get()
@@ -121,6 +125,8 @@ class Application():
             self.PesquisaC()
         elif b == 2:
             self.SearchV()
+        elif b == 3:
+            self.PesquisaCPFPDF()
 
     def PesquisaN(self):
         self.path = self.getPath()
@@ -135,7 +141,7 @@ class Application():
         else:
             self.listbox.delete(0, END)
             self.listbox.insert("end","Nenhum resultado encontrado")
-    
+
     def PesquisaC(self):
         self.path = self.getPath()
         pesquisa = self.pesquisa.get()
@@ -181,26 +187,54 @@ class Application():
             self.listbox.delete(0, END)
             self.listbox.insert("end","Pesquisa por VULGO não aceita campo vazio")
 
-    def AbreArq(self):
+    def PesquisaCPFPDF(self):
+        self.path = self.getPath()
+        pesquisa = self.pesquisa.get()
+        t = self.validaCPF(pesquisa)
+        formato = ''
+
+        if t == 0:
+            self.listbox.delete(0, END)
+            self.listbox.insert("end","Pesquisa por CPF não aceita letras")
+            return
+
+        for i in range(len(pesquisa)):
+            if (pesquisa[i] != ' ' and pesquisa[i] != '-' and pesquisa[i] != '.'):
+                formato += pesquisa[i]
+        if pesquisa != "":
+            nome = PesquisaCPFPDF(self.path, formato)
+            if (nome != None):
+                self.arquivo = [nome]
+                self.listbox.delete(0, END)
+                self.listbox.insert("end", "\n1" + " - " + nome)
+            else:
+                self.listbox.delete(0, END)
+                self.listbox.insert("end","Nenhum resultado encontrado")
+        else:
+            self.listbox.delete(0, END)
+            self.listbox.insert("end","Pesquisa por CPF não aceita campo vazio")
+
+    def AbreArq(self, event):
         numero = self.select_item()
         if numero != None:
             if int(numero) <= len(self.arquivo):
                 os.startfile(self.path[1] + self.arquivo[int(numero) - 1])
         else:
             os.startfile(self.path[1] + self.arquivo[0])
-    
+
     def clean(self):
         self.listbox.delete(0,END)
         self.pesquisa.delete(0,END)
-        
+
     def select_item(self):
         for i in self.listbox.curselection():
             num = self.listbox.get(i).replace('\n', '')
             num = self.listbox.get(i).split(" ")
             return(num[0])
-    
+
     def configura(self):
         conf = Tk(className="Configuração")
+        conf.geometry("400x250")
         Configuracao(conf)
         conf.mainloop()
 
@@ -215,7 +249,7 @@ class Application():
                 b.append(i.replace("\n",""))
             arq.close()
             return b
-    
+
     def validaCPF(self, a):
         alfa = ['1','2','3','4','5','6','7','8','9','-','.']
         for i in a:
@@ -229,6 +263,7 @@ class Application():
 
 
 root = Tk(className="Finding 2")
+root.geometry("400x500")
 Application(root)
 root.mainloop()
 

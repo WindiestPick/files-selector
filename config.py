@@ -1,7 +1,9 @@
 from tkinter import *
+from tkinter.ttk import *
 import os
-from pesquisaCPF import AtualizaCache
+from pesquisaCPF import *
 from pesquisaVulgo import update_cache
+
 
 class Configuracao():
     def __init__(self, master=None):
@@ -9,35 +11,24 @@ class Configuracao():
         self.fontePadrao = ("Arial", "10")
         self.fonteAtualiza = ("Arial", "8")
         self.primeiroContainer = Frame(master)
-        self.primeiroContainer["pady"] = 10
-        self.primeiroContainer["padx"] = 20
         self.primeiroContainer.pack()
 
         self.segundoContainer = Frame(master)
-        self.segundoContainer["pady"] = 10
-        self.segundoContainer["padx"] = 20
-        self.segundoContainer.pack()
+        self.segundoContainer.pack(pady = 10)
 
         self.terceiroContainer = Frame(master)
-        self.terceiroContainer["pady"] = 10
-        self.terceiroContainer["padx"] = 20
-        self.terceiroContainer.pack()
-
+        self.terceiroContainer.pack(pady = 10)
 
         self.quartoContainer = Frame(master)
-        self.quartoContainer["pady"] = 10
-        self.quartoContainer["padx"] = 20
-        self.quartoContainer.pack()
+        self.quartoContainer.pack(pady = 10)
 
-
-        self.title = Label(self.primeiroContainer,text="Configurações", font=self.fontePadrao)
-        self.title.pack()
+        self.qintoContainer = Frame(master)
+        self.qintoContainer.pack(pady = 10)
 
         self.path1Label = Label(self.segundoContainer, text="Adicionar um diretório padrão", font=self.fontePadrao)
         self.path1Label.pack()
 
         self.path1 = Entry(self.segundoContainer)
-        self.path1["width"] = 30
         self.path1["font"] = self.fontePadrao
         self.path1.pack(side=LEFT)
 
@@ -54,6 +45,10 @@ class Configuracao():
         self.configuracao = Button(self.quartoContainer, text="Atualizar Cache")
         self.configuracao.pack(side="right")
         self.configuracao["command"] = self.start
+
+        self.sair = Button(self.qintoContainer, text="Sair")
+        self.sair.pack(side="right")
+        self.sair["command"] = master.destroy
 
         self.getPath()
 
@@ -80,4 +75,5 @@ class Configuracao():
     def start(self):
         AtualizaCache(self.path)
         update_cache(self.path)
+        
         

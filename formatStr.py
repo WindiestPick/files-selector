@@ -16,6 +16,8 @@ def formata(palavra):
 
     res = res.replace("à",'a')
 
+    res = res.replace("ç","c")
+
     return res
 
     
