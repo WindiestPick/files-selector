@@ -75,12 +75,16 @@ class Configuracao():
         msg.iconbitmap(".\\photo\\Finding.ico")
         msg.geometry("300x150")
 
+        def transporte():
+            self.atualizarPath()
+            msg.destroy()
+
         mensagem = Label(msg, font=self.fontePadrao, text="Deseja atualizar o diretório?")
         mensagem.pack(pady=20)
 
         sim = Button(msg, text="Sim")
         sim.pack(side="right", padx=20)
-        sim["command"] = self.atualizarPath
+        sim["command"] = transporte
 
         nao = Button(msg, text="Não")
         nao.pack(side="left", padx=20)
