@@ -33,7 +33,8 @@ class Configuracao():
         self.qintoContainer = Frame(master)
         self.qintoContainer.pack(pady = 10)
 
-        self.path1Label = Label(self.segundoContainer, text="Adicionar um diretório padrão", font=self.fontePadrao)
+        self.path1Label = Label(self.segundoContainer, 
+                    text="Adicionar um diretório padrão", font=self.fontePadrao)
         self.path1Label.pack()
 
         self.path1 = Entry(self.segundoContainer)
@@ -79,7 +80,7 @@ class Configuracao():
 
         sim = Button(msg, text="Sim")
         sim.pack(side="right", padx=20)
-        sim["command"] = self.atualizarCache
+        sim["command"] = self.atualizarPath
 
         nao = Button(msg, text="Não")
         nao.pack(side="left", padx=20)
@@ -109,7 +110,7 @@ class Configuracao():
         time.sleep(2)
         self.status['text'] = ''
 
-    def atualizarCache(self):
+    def atualizarPath(self):
         arq = open("config.txt","w")
         text = self.path1.get()
         CURR_DIR = os.getcwd()
@@ -118,5 +119,3 @@ class Configuracao():
         self.path1.delete(0,END)
         arq.close()
         self.getPath()
-        
-        

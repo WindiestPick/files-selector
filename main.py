@@ -1,4 +1,3 @@
-from tkinter.ttk import Style
 from pesquisaNome import PesquisaNome
 from pesquisaCPF import PesquisaCPF
 from pesquisaVulgo import search_vulgo
@@ -65,6 +64,7 @@ class Application():
                              variable= self.radioValue, value=1) 
         self.rdioThree = Radiobutton(self.selectContainer, text='"Vulgo"',
                              variable= self.radioValue, value=2)
+                             
         self.rdioFour = Radiobutton(self.selectContainer, text='CPF 🄱🄴🅃🄰',
                              variable= self.radioValue, value=3)
 
