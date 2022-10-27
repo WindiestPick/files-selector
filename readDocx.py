@@ -127,7 +127,7 @@ def GetCPf(file):
     for i in range(len(b)):
         test = b[i]
         test = test.split(":")
-        if (test[0] == "CPF"):
+        if (test[0].lower() == "cpf"):
             cpf = ''
             for j in range(len(test[1])):
                 if test[1][j] != ' ' and test[1][j] != '-' and test[1][j] != '.':
