@@ -23,7 +23,7 @@ def PesquisaCPF(path, cpf):
         for i in range(len(files)):
             cpfArq = GetCPf(path[1] + files[i])
            
-            if (cpf == cpfArq):
+            if (cpfArq.__contains__(cpf.lower())):
                 SetCpfCache(cpf, files[i], path[2])
                 return files[i]
     else:
