@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from xml.dom import NotFoundErr
 from docx import Document
 from docx.opc.exceptions import PackageNotFoundError
-
+import re
 
 @dataclass
 class FormatFilter:
@@ -118,16 +118,18 @@ def docx_to_text(file):
 
 def GetCPf(file):
     # Use docx2txt
-    a = docx_to_text(file)
-    a = a.split('\n')
+    arquivo = docx_to_text(file)
+    arquivo = re.sub(r'\t', '\n', arquivo)
+    a = arquivo.split('\n')
     b = []
+    
     for i in range(len(a)):
         if (a[i] != ""):
             b.append(a[i])
     for i in range(len(b)):
         test = b[i]
         test = test.split(":")
-        if (test[0].lower() == "cpf"):
+        if (test[0].lower() == "cpf" ):
             cpf = ''
             for j in range(len(test[1])):
                 if test[1][j] != ' ' and test[1][j] != '-' and test[1][j] != '.':
